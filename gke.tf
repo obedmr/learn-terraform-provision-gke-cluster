@@ -9,7 +9,7 @@ variable "gke_password" {
 }
 
 variable "gke_num_nodes" {
-  default     = 2
+  default     = 4
   description = "number of gke nodes"
 }
 
@@ -39,6 +39,7 @@ resource "google_container_node_pool" "primary_nodes" {
     oauth_scopes = [
       "https://www.googleapis.com/auth/logging.write",
       "https://www.googleapis.com/auth/monitoring",
+      "https://www.googleapis.com/auth/cloud-platform",
     ]
 
     labels = {
@@ -46,7 +47,7 @@ resource "google_container_node_pool" "primary_nodes" {
     }
 
     # preemptible  = true
-    machine_type = "n1-standard-1"
+    machine_type = "n1-standard-8"
     tags         = ["gke-node", "${var.prefix}-gke"]
     metadata = {
       disable-legacy-endpoints = "true"
